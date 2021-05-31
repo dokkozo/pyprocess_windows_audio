@@ -1,5 +1,5 @@
-# virtual audio compress
-This tool process stream from an output device and write to another output device by utilizing loopback mode of Windows WASAPI.
+# Process windows desktop audio
+This tool processes stream from an output device and write to another output device by utilizing loopback mode of Windows WASAPI.
 Especially, this imprementation includes compression of audio, that makes volume uniform by compressing only loud sound and do nothing for small sound.
 
 ## Requirements
