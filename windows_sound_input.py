@@ -9,7 +9,7 @@ import queue
 
 DUMMY_DEV_NAME = "3-4 (QUAD-CAPTURE)"
 RATE = 48000
-CHUNK = 1024
+CHUNK = 128
 CHANNEL_IN = 2
 CHANNEL_OUT = 2
 RMS_AVERAGE_CHUNK = 5
@@ -51,6 +51,8 @@ def signal_proc(input_audio, RMS_history, Previous_gain):
         else:
             RMS_history[i] = rms
 
+    # weighted_rms = RMS_history * np.arange(len(RMS_history)) / sum(np.arange(len(RMS_history)))
+
     Target_gain = makeup * thres / max(thres, np.mean(RMS_history))
     
     # to prevent discoutinuous of audio, linearly interporate gain from previous gain to target gain
@@ -58,7 +60,7 @@ def signal_proc(input_audio, RMS_history, Previous_gain):
 
     output_audio = gain * input_audio
 
-    if max(thres, rms) > thres:
+    if Target_gain/makeup < 1:
         print(f"compress: {- 20 * np.log10(Target_gain/makeup):.02f} dB")
 
     Previous_gain = Target_gain
